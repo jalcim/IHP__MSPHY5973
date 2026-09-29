@@ -1,6 +1,6 @@
 # Release v.1.0.0 de MSPHY5973
 
-Note pré-remplie le 29/09/2026, avant le premier GDS.
+Note du 29/09/2026, premier GDS d'assemblage.
 
 Elle est mise à jour à chaque push de GDS et à chaque étape de vérification.
 
@@ -8,26 +8,29 @@ Elle est mise à jour à chaque push de GDS et à chaque étape de vérification
 
 | Élément | Chemin | État |
 |---|---|---|
-| GDS de la puce, cellule de tête MSPHY5973 | `release/v.1.0.0/gds/` | À venir |
-| Netlist de la puce | `release/v.1.0.0/netlist/` | À venir |
+| GDS de la puce, cellule de tête MSPHY5973 | `release/v.1.0.0/gds/MSPHY5973.gds.gz` | GDS d'assemblage, sans routage ni PDN de niveau puce |
+| Netlist de la puce | `release/v.1.0.0/netlist/MSPHY5973.v` | Livrée |
 | Rapports de vérification | `release/v.1.0.0/doc/` | À venir (mode coupe) |
 
-La puce assemble :
+Blocs placés :
 
 - l'anneau MIPI_ring (ANALOG_DESIGN 7efada02e) ;
 - csi2_top (livraison 78524823) ;
-- top_rx et dphy_rx (MR !7 et !8) ;
-- sr16_rx4 (caelum 7061656b8) ;
-- 33 cml_to_cmos (CML_LIB, ANALOG_DESIGN fe70f9b8e) ;
-- les blocs TX : dphy_tx, 4 sr16_tx, HS_TX_PD (ANALOG_DESIGN 25a940756).
+- dphy_rx (MR !7 et !8) et dphy_tx ;
+- sr16_rx4 (caelum a0f94510f) ;
+- 4 sr16_tx ;
+- le seal ring.
 
-Chaîne : flot LibreLane de sg13g2_mipileo (Léo Moser).
+Blocs non posés, faute de GDS : cml2cmos, tx_front (pont TX), PLL, HS_TX_PD.
+
+Chaîne : chaîne nebula (NebulaChip, nebula_toolchain) pour la v1.0.0, flot LibreLane de sg13g2_mipileo (Léo Moser) en mise à jour.
 
 ## Vérifications
 
 | Étape | État |
 |---|---|
-| Seal ring | Prévu dans le premier GDS |
+| Seal ring | Présent |
+| Routage et PDN de niveau puce | Mise à jour |
 | Remplissage | Mise à jour |
 | DRC KLayout | Mise à jour |
 | Précheck officiel IHP | Mise à jour |
@@ -35,11 +38,13 @@ Chaîne : flot LibreLane de sg13g2_mipileo (Léo Moser).
 | Antennes | Mise à jour |
 | STA de la puce | Mise à jour |
 | Simulation de la puce entière | Mise à jour |
-| Enregistrement du GDS (sans contexte de PCell, sans chemin de longueur nulle) | À vérifier sur le premier GDS |
+| Enregistrement du GDS (sans contexte de PCell, sans chemin de longueur nulle, unité 0,001 µm) | Contrôlé par verif_soumission_ihp.py |
 
 ## Limitations
 
 - Mode coupe (D37) : les vérifications ci-dessus viennent après le premier GDS.
+- GDS sans routage ni PDN de niveau puce, blocs cml2cmos, tx_front, PLL et HS_TX_PD non posés.
+- Plots d'alimentation MIPI sans bondpad, à confirmer.
 - Die de 2 560 µm, provisoire.
 - csi2_top au coin lent : 104,1 MHz au plus en modes 00 à 10, 89,2 MHz en mode 11 (choix 58).
 - Hold de dphy_rx à −0,042 ns au coin rapide (D36).

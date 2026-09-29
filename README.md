@@ -4,7 +4,7 @@ Puce mixte en IHP SG13G2, pour le run Open-Silicon MPW d'octobre 2026.
 
 Cellule de tête : `MSPHY5973`.
 
-Chaîne de conception de ce dépôt : flot LibreLane de sg13g2_mipileo (Léo Moser).
+Chaîne de conception de ce dépôt : chaîne nebula (NebulaChip, nebula_toolchain) pour la v1.0.0, flot LibreLane de sg13g2_mipileo (Léo Moser) en mise à jour.
 
 La même puce est soumise dans IHP__MSPHY4263, avec le flot nebula (NebulaChip, nebula_toolchain).
 
@@ -16,7 +16,14 @@ Demande de soumission : [IHP-GmbH/Open-Silicon-MPW#71](https://github.com/IHP-Gm
 
 **v1.0.0 : assemblage des blocs signés et de l'anneau.**
 
-- Routage de niveau puce, remplissage, précheck, DRC et LVS en cours (mise à jour à suivre).
+- **GDS d'assemblage produit par la chaîne nebula.**
+  La version du flot de Léo remplacera ce GDS en mise à jour.
+- **GDS d'assemblage sans placement-routage de niveau puce.**
+  Anneau MIPI_ring (7efada02e), macros csi2_top, dphy_rx, dphy_tx, sr16_rx4 et 4 sr16_tx placées, seal ring.
+  Aucun routage ni PDN de niveau puce.
+- **Blocs non posés, faute de GDS :** conversion CML vers CMOS (cml2cmos), pont TX (tx_front), PLL, pré-drivers HS_TX_PD.
+- **Plots d'alimentation MIPI sans bondpad** (pas de broche PAD), à confirmer avec le concepteur de l'anneau.
+- Routage de niveau puce, remplissage, précheck, DRC, LVS et simulation en cours (mise à jour à suivre).
 - Renvoi RX → TX en cours d'intégration (pont TX), exigé pour la version envoyée.
 - Horloge TX externe (CLKIN).
 
@@ -24,9 +31,7 @@ Détail :
 
 Documents pré-remplis le 29/09/2026.
 
-Le GDS et la netlist ne sont pas encore dans `release/v.1.0.0/`.
-
-Ils sont poussés dès qu'ils existent, puis mis à jour à chaque étape de vérification.
+GDS et netlist dans `release/v.1.0.0/`, mis à jour à chaque étape de vérification.
 
 - **Mode coupe (dette D37).**
   Le premier GDS part sans DRC, sans LVS, sans vérification d'antennes, sans précheck officiel IHP, sans remplissage, sans STA de la puce et sans simulation de la puce entière.
@@ -42,7 +47,7 @@ Ils sont poussés dès qu'ils existent, puis mis à jour à chaque étape de vé
   Un hold négatif ne se rattrape pas en baissant la fréquence.
 - **Renvoi RX vers TX non fonctionnel en v1.0.0** (dette D38).
   Le pont entre csi2_top et le TX est en cours.
-  Les blocs TX sont placés et reliés aux plots, leurs commandes sont tenues inactives, les sorties `fifo_tx_*` de csi2_top restent libres.
+  Les blocs TX sont placés, sans routage, et les sorties `fifo_tx_*` de csi2_top restent libres.
 - **Aucune sortie de csi2_top n'atteint une broche en v1.0.0.**
   Les sorties d'application restent libres, et le renvoi est inactif.
   La réception n'est donc pas observable depuis l'extérieur de la puce dans cette version.
@@ -61,12 +66,12 @@ Ils sont poussés dès qu'ils existent, puis mis à jour à chaque étape de vé
 - Tensions d'IOVDD et d'IOVDD_MIPI.
 - Consommation par domaine.
 - Noms définitifs des fichiers GDS et netlist dans `release/v.1.0.0/`.
-- Commits exacts de dphy_rx, dphy_tx, sr16_tx et sr16_rx4 au moment de l'assemblage.
+- Commits exacts de dphy_rx, dphy_tx et sr16_tx au moment de l'assemblage.
 - Horloge de mot du TX et plage de fréquence de CLKIN (pont TX, prompt 065).
 - Raccordement de la broche PG de dphy_rx et dphy_tx (polarisation des cellules de temporisation).
 - Commandes de terminaison et de validation du récepteur HS (`term_en`, `hs_rx_en`) : MIPI_IOPadRX n'a pas d'entrée de commande à ce jour.
 - L'arbre du PDK utilisé porte d'autres modifications locales non commitées (74 fichiers suivis, dont bondpad_code.py, et deux sous-modules hors épingle). Leur effet sur la puce est à qualifier.
-- Versions des outils lues dans le shell nix de sg13g2_mipileo le 29/09/2026. À confirmer sur le run qui produit le premier GDS.
+- Commit de nebula_toolchain du run de puce : 9ade8d2 est celui du paquet installé, le run peut prendre une branche de travail (couture des lanes). À confirmer au premier GDS.
 - Liste des auteurs, à valider.
 
 ## La puce
@@ -102,7 +107,7 @@ Sources dans le dépôt privé nebula_microsystems/mipi (GitLab), sauf mention.
 | MIPI_ring | Anneau d'E/S : plots MIPI_IOPadRX, MIPI_IOPadTX, MIPI_IOPadIn, MIPI_IOPadOut, alimentations, coins, MIPI_CornerBreaker, MIPI_IOPadBandgap (bandgap et pistes de polarisation en Metal4) | ANALOG_DESIGN, `2_analog/CSI2_DPHY_RING/COLLATERALS/` | 7efada02e |
 | csi2_top | Lane Management, LLP (ECC, CRC, VC, DT), pixel-byte RX et TX, contrôle de trame, renvoi RX vers TX. Macro dure, run `tapeout_s3r_t4_R1_13_d60` | claude/livraison-csi2-top, `3_digital/livraison/csi2_top/COLLATERALS/` | 78524823 |
 | top_rx, dphy_rx | Machines d'états LP et HS du récepteur, sorties `hspr` et `hsreq` par lane | StateMachines (MR !7 fusionnée), caelum (MR !8 fusionnée) | 471d6dad9, a35c19710 |
-| sr16_rx4 | Désérialiseur CML 4 lanes, ÷4 commun (CLK_W) | caelum, `3_digital/CML_SR/SR16_RX4/COLLATERALS/` | 7061656b8 |
+| sr16_rx4 | Désérialiseur CML 4 lanes, ÷4 commun (CLK_W) | caelum, `3_digital/CML_SR/SR16_RX4/COLLATERALS/` | a0f94510f |
 | dphy_tx | Machines d'états du TX | caelum, `3_digital/DPHY_SM/COLLATERALS/` | TBD à l'assemblage |
 | sr16_tx (×4) | Sérialiseur CML, une lane par instance | caelum, `3_digital/CML_SR/SR16_TX/COLLATERALS/` | TBD à l'assemblage |
 | HS_TX_PD | Pré-driver d'une paire HS-TX, contre les plots MIPI_IOPadTX | ANALOG_DESIGN | 25a940756 |
@@ -128,8 +133,11 @@ Règle de carte : toute lane de données RX inutilisée a ses deux broches P et 
 
 ## Chaîne de conception
 
-Le flot LibreLane (flot Chip) du dépôt sg13g2_mipileo de Léo Moser, LibreLane v3.1.0.dev3 (commit aaf7a938), dans le shell nix du dépôt.
-Les macros dures sont intégrées telles que livrées.
+Version v1.0.0 : le GDS d'assemblage est produit par la chaîne nebula, comme celui de IHP__MSPHY4263, renommé MSPHY5973.
+NebulaChip, le flot de puce du plugin nebulane (nebula_toolchain), sur LibreLane 3.0.14.
+La netlist de la puce est structurelle, écrite par nestis_cpp : aucune synthèse logique au niveau puce.
+
+Mise à jour prévue : le GDS du flot LibreLane (flot Chip) du dépôt sg13g2_mipileo de Léo Moser remplacera celui-ci.
 
 - PDK : IHP-Open-PDK au commit cfc0e22b (03/09/2026), plus la permutation W/L des HBT de la PR #1128 (fichier ihp-sg13g2-extract.tech de Magic), appliquée localement.
 - Versions des outils : `doc/info.json`, champ `tools`.

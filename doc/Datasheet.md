@@ -23,7 +23,7 @@ Toute valeur marquée TBD est encore inconnue.
 | Tension de cœur | 1,2 V nominal |
 | Tensions d'E/S | TBD |
 | Consommation | TBD |
-| Chaîne de conception | flot LibreLane de sg13g2_mipileo (Léo Moser) |
+| Chaîne de conception | chaîne nebula (NebulaChip, nebula_toolchain) pour la v1.0.0, flot LibreLane de sg13g2_mipileo (Léo Moser) en mise à jour |
 
 ## Timing de csi2_top par mode de renvoi
 

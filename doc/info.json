@@ -40,18 +40,19 @@
     }
   },
   "tools": {
-    "flow": "LibreLane, flot Chip de sg13g2_mipileo",
-    "librelane": "3.1.0.dev3 (aaf7a938766e0708ca894776d81e2c2cfb12b7e7)",
-    "openroad": "dcf36133a369abc8f3c5e5738cd4d82e4903c0e0",
+    "flow": "NebulaChip (plugin nebulane 0.1.0, paquet nebula-eda 0.1.0-13, nebula_toolchain 9ade8d2)",
+    "librelane": "3.0.14",
+    "openroad": "26Q3-2676-g943a4d2c92",
     "klayout": "0.30.12",
-    "magic": "8.3.677",
-    "netgen": "1.5.323"
+    "magic": "8.3.682",
+    "netgen": "1.5.323",
+    "netlist": "nestis_cpp (paquet nebula-eda 0.1.0-13), netlist structurelle de la puce"
   },
   "top_cell_name": "MSPHY5973",
   "release": {
     "version": "v.1.0.0",
     "gds": "release/v.1.0.0/gds/MSPHY5973.gds.gz",
-    "netlist": "release/v.1.0.0/netlist",
+    "netlist": "release/v.1.0.0/netlist/MSPHY5973.v",
     "doc": "release/v.1.0.0/doc"
   }
 }
