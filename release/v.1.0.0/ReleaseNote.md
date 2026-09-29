@@ -40,7 +40,7 @@ Chaîne : flot LibreLane de sg13g2_mipileo (Léo Moser).
 ## Limitations
 
 - Mode coupe (D37) : les vérifications ci-dessus viennent après le premier GDS.
-- Die de 2 480 µm, provisoire.
+- Die de 2 560 µm, provisoire.
 - csi2_top au coin lent : 104,1 MHz au plus en modes 00 à 10, 89,2 MHz en mode 11 (choix 58).
 - Hold de dphy_rx à −0,042 ns au coin rapide (D36).
 - Renvoi RX vers TX non fonctionnel, pont TX en cours (D38). Blocs TX placés, commandes tenues inactives.

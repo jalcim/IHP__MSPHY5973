@@ -12,7 +12,7 @@ Toute valeur marquée TBD est encore inconnue.
 |---|---|
 | Technologie | IHP SG13G2 (BiCMOS 130 nm) |
 | Cellule de tête | MSPHY5973 |
-| Die | 2 480 × 2 480 µm, provisoire |
+| Die | 2 560 × 2 560 µm, provisoire |
 | Boîtier visé | QFN64 d'IHP |
 | Interface reçue | MIPI CSI-2 sur D-PHY, 1 lane d'horloge et 4 lanes de données |
 | Débit HS visé | 1 Gbit/s par lane, 4 Gbit/s au total |

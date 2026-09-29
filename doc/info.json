@@ -5,10 +5,10 @@
   "unique_id": "5973",
   "license": "Apache-2.0",
   "trl": 0,
-  "sealring_x": 2480.0,
-  "sealring_y": 2480.0,
+  "sealring_x": 2560.0,
+  "sealring_y": 2560.0,
   "repository": "https://github.com/jalcim/IHP__MSPHY5973",
-  "pdk_version": "22f43352dd8219f9007eb659e422e0d5fe28c5fb",
+  "pdk_version": "cfc0e22b92306178ebb5a5bc4865afe3294654d0 + PR #1128 (local)",
   "process": "SG13G2",
   "dependencies": {
     "MIPI_ring": {

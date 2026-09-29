@@ -14,6 +14,14 @@ Demande de soumission : [IHP-GmbH/Open-Silicon-MPW#71](https://github.com/IHP-Gm
 
 ## État et limitations de la v1.0.0
 
+**v1.0.0 : assemblage des blocs signés et de l'anneau.**
+
+- Routage de niveau puce, remplissage, précheck, DRC et LVS en cours (mise à jour à suivre).
+- Renvoi RX → TX en cours d'intégration (pont TX), exigé pour la version envoyée.
+- Horloge TX externe (CLKIN).
+
+Détail :
+
 Documents pré-remplis le 29/09/2026.
 
 Le GDS et la netlist ne sont pas encore dans `release/v.1.0.0/`.
@@ -23,7 +31,7 @@ Ils sont poussés dès qu'ils existent, puis mis à jour à chaque étape de vé
 - **Mode coupe (dette D37).**
   Le premier GDS part sans DRC, sans LVS, sans vérification d'antennes, sans précheck officiel IHP, sans remplissage, sans STA de la puce et sans simulation de la puce entière.
   Toutes ces étapes viennent en mise à jour de ce dépôt.
-- **Die de 2 480 µm de côté, provisoire.**
+- **Die de 2 560 µm de côté, provisoire.**
   `sealring_x` et `sealring_y` suivent le die du premier GDS.
 - **csi2_top ne tient pas 125,125 MHz au coin lent** (1,08 V, 125 °C).
   Setup −1,615 ns en modes de renvoi 00 à 10, soit 104,1 MHz au plus.
@@ -49,7 +57,7 @@ Ils sont poussés dès qu'ils existent, puis mis à jour à chaque étape de vé
 ## Valeurs à confirmer (TBD)
 
 - Numéros de broche QFN64, ordre des plots sur chaque côté, plan de bonding.
-- Taille finale du die, donc `sealring_x` et `sealring_y` (2 480 µm provisoire).
+- Taille finale du die, donc `sealring_x` et `sealring_y` (2 560 µm provisoire).
 - Tensions d'IOVDD et d'IOVDD_MIPI.
 - Consommation par domaine.
 - Noms définitifs des fichiers GDS et netlist dans `release/v.1.0.0/`.
@@ -57,7 +65,7 @@ Ils sont poussés dès qu'ils existent, puis mis à jour à chaque étape de vé
 - Horloge de mot du TX et plage de fréquence de CLKIN (pont TX, prompt 065).
 - Raccordement de la broche PG de dphy_rx et dphy_tx (polarisation des cellules de temporisation).
 - Commandes de terminaison et de validation du récepteur HS (`term_en`, `hs_rx_en`) : MIPI_IOPadRX n'a pas d'entrée de commande à ce jour.
-- Commit du PDK (22f43352) relevé sur le run de fumée du 29/09/2026 à 17:29 UTC. À confirmer sur le run qui produit le premier GDS.
+- L'arbre du PDK utilisé porte d'autres modifications locales non commitées (74 fichiers suivis, dont bondpad_code.py, et deux sous-modules hors épingle). Leur effet sur la puce est à qualifier.
 - Versions des outils lues dans le shell nix de sg13g2_mipileo le 29/09/2026. À confirmer sur le run qui produit le premier GDS.
 - Liste des auteurs, à valider.
 
@@ -123,7 +131,7 @@ Règle de carte : toute lane de données RX inutilisée a ses deux broches P et 
 Le flot LibreLane (flot Chip) du dépôt sg13g2_mipileo de Léo Moser, LibreLane v3.1.0.dev3 (commit aaf7a938), dans le shell nix du dépôt.
 Les macros dures sont intégrées telles que livrées.
 
-- PDK : IHP-Open-PDK au commit 22f43352, installé par ciel dans le dépôt du flot. Ce commit porte déjà la permutation W/L des HBT de la PR #1128.
+- PDK : IHP-Open-PDK au commit cfc0e22b (03/09/2026), plus la permutation W/L des HBT de la PR #1128 (fichier ihp-sg13g2-extract.tech de Magic), appliquée localement.
 - Versions des outils : `doc/info.json`, champ `tools`.
 - csi2_top est une macro dure, construite hors du run de la puce.
 
