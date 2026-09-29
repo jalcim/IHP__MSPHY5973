@@ -5,13 +5,48 @@
   "unique_id": "5973",
   "license": "Apache-2.0",
   "trl": 0,
-  "sealring_x": 1.0,
-  "sealring_y": 1.0,
+  "sealring_x": 2480.0,
+  "sealring_y": 2480.0,
   "repository": "https://github.com/jalcim/IHP__MSPHY5973",
-  "pdk_version": "",
+  "pdk_version": "22f43352dd8219f9007eb659e422e0d5fe28c5fb",
   "process": "SG13G2",
-  "dependencies": {},
-  "tools": {},
+  "dependencies": {
+    "MIPI_ring": {
+      "dependencies": {}
+    },
+    "csi2_top": {
+      "dependencies": {}
+    },
+    "dphy_rx": {
+      "dependencies": {}
+    },
+    "top_rx": {
+      "dependencies": {}
+    },
+    "sr16_rx4": {
+      "dependencies": {}
+    },
+    "cml_to_cmos": {
+      "dependencies": {}
+    },
+    "dphy_tx": {
+      "dependencies": {}
+    },
+    "sr16_tx": {
+      "dependencies": {}
+    },
+    "HS_TX_PD": {
+      "dependencies": {}
+    }
+  },
+  "tools": {
+    "flow": "LibreLane, flot Chip de sg13g2_mipileo",
+    "librelane": "3.1.0.dev3 (aaf7a938766e0708ca894776d81e2c2cfb12b7e7)",
+    "openroad": "dcf36133a369abc8f3c5e5738cd4d82e4903c0e0",
+    "klayout": "0.30.12",
+    "magic": "8.3.677",
+    "netgen": "1.5.323"
+  },
   "top_cell_name": "MSPHY5973",
   "release": {
     "version": "v.1.0.0",
