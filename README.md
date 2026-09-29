@@ -22,6 +22,7 @@ Demande de soumission : [IHP-GmbH/Open-Silicon-MPW#71](https://github.com/IHP-Gm
   Anneau MIPI_ring (7efada02e), macros csi2_top, dphy_rx, dphy_tx, sr16_rx4 et 4 sr16_tx placées, seal ring.
   Aucun routage ni PDN de niveau puce.
 - **Blocs non posés, faute de GDS :** conversion CML vers CMOS (cml2cmos), pont TX (tx_front), PLL, pré-drivers HS_TX_PD.
+  Ils sont instanciés en boîte noire dans la netlist, sans cellule dans le GDS.
 - **Plots d'alimentation MIPI sans bondpad** (pas de broche PAD), à confirmer avec le concepteur de l'anneau.
 - Routage de niveau puce, remplissage, précheck, DRC, LVS et simulation en cours (mise à jour à suivre).
 - Renvoi RX → TX en cours d'intégration (pont TX), exigé pour la version envoyée.
